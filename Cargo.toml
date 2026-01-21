@@ -1,12 +1,36 @@
 [package]
 name = "mev-lib"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 license = "MIT"
 readme = "README.md"
 description = "MEV utilities library for Ethereum mainnet"
 repository = "https://github.com/darkhorse-techsolution/mev-lib"
-keywords = ["ethereum", "mev", "blockchain", "defi"]
+keywords = ["ethereum", "mev", "blockchain", "defi", "arbitrage"]
 categories = ["cryptography::cryptocurrencies"]
 
 [dependencies]
+# Ethereum primitives
+alloy-primitives = "0.8"
+
+# Hex encoding/decoding
+hex = "0.4"
+
+# Error handling
+thiserror = "2.0"
+
+# Serialization (optional)
+serde = { version = "1.0", features = ["derive"], optional = true }
+
+# Simulation (optional feature)
+revm = { version = "19", optional = true }
+
+[dev-dependencies]
+# For testing
+alloy-primitives = { version = "0.8", features = ["arbitrary"] }
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
+
+[features]
+default = []
+serde = ["dep:serde", "alloy-primitives/serde"]
+simulation = ["dep:revm"]
